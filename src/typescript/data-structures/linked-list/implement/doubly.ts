@@ -1,14 +1,16 @@
 class _Node<T> {
 	readonly value: T;
-	next: _Node<T> | null;
+	prev: _Node<T> | null = null;
+	next: _Node<T> | null = null;
 
-	constructor(value: T, next?: _Node<T>) {
+	constructor(value: T, next?: _Node<T>, prev?: _Node<T>) {
 		this.value = value;
 		this.next = next || null;
+		this.prev = prev || null;
 	}
 }
 
-export class _LikedListSingly<T> {
+export class _LikedListDoubly<T> {
 	length: number = 0;
 	head: _Node<T> | null = null;
 	tail: _Node<T> | null = null;
@@ -39,7 +41,6 @@ export class _LikedListSingly<T> {
 	peek_back() {
 		return this.tail;
 	}
-
 	traverse(callback?: (v: T, idx: number) => unknown) {
 		let current = this.head;
 		let index = 0;
@@ -55,7 +56,6 @@ export class _LikedListSingly<T> {
 
 		if (!callback) return results;
 	}
-
 	find(value: T): _Node<T> | null {
 		let current = this.head;
 
@@ -67,21 +67,33 @@ export class _LikedListSingly<T> {
 	}
 
 	push_front(value: T) {
-		const node = new _Node(value, this.length > 0 ? this.head! : undefined);
-		this.head = node;
-		this.tail = this.tail || node;
-		this.length++;
-	}
-	push_back(value: T) {
+		// add to start
 		const node = new _Node(value);
+		this.length += 1;
+
+		if (this.head) {
+			this.head.prev = node;
+			node.next = this.head;
+			this.head = node;
+		} else {
+			this.head = node;
+			this.tail = node;
+		}
+	}
+
+	push_back(value: T) {
+		// add to end
+		const node = new _Node(value);
+		this.length += 1;
+
 		if (this.tail) {
 			this.tail.next = node;
+			node.prev = this.tail;
 			this.tail = node;
 		} else {
 			this.head = node;
 			this.tail = node;
 		}
-		this.length += 1;
 	}
 
 	pop_front() {
@@ -90,11 +102,13 @@ export class _LikedListSingly<T> {
 		const removed = this.head;
 
 		this.head = this.head.next;
+		if (this.head) this.head.prev = null;
 		this.length -= 1;
 
 		if (!this.head) this.tail = null;
 		return removed;
 	}
+
 	pop_back() {
 		if (!this.tail) return null;
 
@@ -104,12 +118,8 @@ export class _LikedListSingly<T> {
 			this.head = null;
 			this.tail = null;
 		} else {
-			let current = this.head;
-			while (current!.next !== this.tail) {
-				current = current!.next;
-			}
-			current!.next = null;
-			this.tail = current;
+			this.tail = removed.prev;
+			if (this.tail) this.tail.next = null;
 		}
 
 		this.length--;
