@@ -8,7 +8,7 @@ class _Node<T> {
 	}
 }
 
-export class _LikedListSingly<T> {
+export class _LinkedListSingly<T> {
 	length: number = 0;
 	head: _Node<T> | null = null;
 	tail: _Node<T> | null = null;

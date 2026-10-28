@@ -10,7 +10,7 @@ class _Node<T> {
 	}
 }
 
-export class _LikedListDoubly<T> {
+export class _LinkedListDoubly<T> {
 	length: number = 0;
 	head: _Node<T> | null = null;
 	tail: _Node<T> | null = null;
@@ -26,6 +26,7 @@ export class _LikedListDoubly<T> {
 					this.tail = node;
 				} else {
 					this.tail!.next = node;
+					node.prev = this.tail;
 					this.tail = node;
 				}
 			}

@@ -1,7 +1,7 @@
-import { _LikedListSingly, _LikedListDoubly } from './implement';
+import { _LinkedListSingly, _LinkedListDoubly } from './implement';
 
 function singly() {
-	const list = new _LikedListSingly<number>([1, 2, 3]);
+	const list = new _LinkedListSingly<number>([1, 2, 3]);
 	console.log('||||||| singly started ||||||||');
 	console.log('Initial list (traverse):', list.traverse());
 	console.log('Length:', list.len());
@@ -46,7 +46,7 @@ function singly() {
 }
 
 function doubly() {
-	const list = new _LikedListDoubly<number>([1, 2, 3]);
+	const list = new _LinkedListDoubly<number>([1, 2, 3]);
 	console.log('||||||| doubly started ||||||||');
 	console.log('Initial list (traverse):', list.traverse());
 	console.log('Length:', list.len());
