@@ -1,4 +1,4 @@
-import { _LikedListSingly, _LikedListDoubly } from './implement/';
+import { _LikedListSingly, _LikedListDoubly } from './implement';
 
 function singly() {
 	const list = new _LikedListSingly<number>([1, 2, 3]);
